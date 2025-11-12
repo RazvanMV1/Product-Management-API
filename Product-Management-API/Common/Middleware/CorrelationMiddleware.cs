@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Product_Management_API.Middleware;
+namespace Product_Management_API.Common.Middleware;
 
 public class CorrelationMiddleware(RequestDelegate next, ILogger<CorrelationMiddleware> logger)
 {

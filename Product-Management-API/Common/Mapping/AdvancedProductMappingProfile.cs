@@ -26,8 +26,6 @@ public class AdvancedProductMappingProfile: Profile
             // Custom Resolvers
             .ForMember(dest => dest.CategoryDisplayName,
                 opt => opt.MapFrom<CategoryDisplayResolver>())
-            .ForMember(dest => dest.FormattedPrice,
-                opt => opt.MapFrom<PriceFormatterResolver>())
             .ForMember(dest => dest.ProductAge,
                 opt => opt.MapFrom<ProductAgeResolver>())
             .ForMember(dest => dest.BrandInitials,
@@ -37,7 +35,12 @@ public class AdvancedProductMappingProfile: Profile
 
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src
                 => src.Category == Features.Products.ProductCategory.Home ? null : src.ImageUrl))
-            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Category == Features.Products.ProductCategory.Home ? src.Price * 0.9m : src.Price));
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src =>
+                src.Category == Features.Products.ProductCategory.Home
+                    ? Math.Round(src.Price * 0.9m, 2)
+                    : src.Price))
+            .ForMember(dest => dest.FormattedPrice,
+                opt => opt.MapFrom<PriceFormatterResolver>());
 
     }
 }
